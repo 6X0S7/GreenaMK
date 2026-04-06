@@ -1,0 +1,98 @@
+[
+  {
+    "id": "user_mia",
+    "name": "Mia Carter",
+    "email": "mia@oto.market",
+    "username": "mia.carter",
+    "password": "mia123",
+    "location": "Plymouth",
+    "bio": "Runs a small local tool and electronics side-hustle.",
+    "accountType": "private",
+    "rating": 4.9,
+    "ratingCount": 41,
+    "addresses": [
+      {
+        "id": "addr_mia_home",
+        "label": "Home",
+        "line1": "14 Ashford Road",
+        "line2": "",
+        "city": "Plymouth",
+        "postcode": "PL4 8TR"
+      },
+      {
+        "id": "addr_mia_work",
+        "label": "Workshop",
+        "line1": "2 Millbay Street",
+        "line2": "Unit 3",
+        "city": "Plymouth",
+        "postcode": "PL1 3LF"
+      }
+    ]
+  },
+  {
+    "id": "user_ava",
+    "name": "Ava Bennett",
+    "email": "ava@oto.market",
+    "username": "ava.bennett",
+    "password": "ava123",
+    "location": "Plymouth",
+    "bio": "Private seller focused on cars and workshop gear.",
+    "accountType": "private",
+    "rating": 4.8,
+    "ratingCount": 28,
+    "addresses": [
+      {
+        "id": "addr_ava_home",
+        "label": "Home",
+        "line1": "9 Oak Crescent",
+        "line2": "",
+        "city": "Plymouth",
+        "postcode": "PL6 6NB"
+      }
+    ]
+  },
+  {
+    "id": "user_jordan",
+    "name": "Jordan Ellis",
+    "email": "jordan@oto.market",
+    "username": "jordan.ellis",
+    "password": "jordan123",
+    "location": "Exeter",
+    "bio": "Tech renter with a few flexible finance listings.",
+    "accountType": "business",
+    "rating": 4.9,
+    "ratingCount": 112,
+    "addresses": [
+      {
+        "id": "addr_jordan_home",
+        "label": "Home",
+        "line1": "27 Beacon Lane",
+        "line2": "",
+        "city": "Exeter",
+        "postcode": "EX2 4PS"
+      }
+    ]
+  },
+  {
+    "id": "user_nia",
+    "name": "Nia Shah",
+    "email": "nia@oto.market",
+    "username": "nia.shah",
+    "password": "nia123",
+    "location": "London",
+    "bio": "Urban mobility seller specialising in bikes and e-bikes.",
+    "accountType": "business",
+    "rating": 4.7,
+    "ratingCount": 63,
+    "addresses": [
+      {
+        "id": "addr_nia_flat",
+        "label": "Flat",
+        "line1": "88 Camden Road",
+        "line2": "Flat 5",
+        "city": "London",
+        "postcode": "NW1 9EA"
+      }
+    ]
+  }
+]

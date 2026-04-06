@@ -1,0 +1,22 @@
+[
+  {
+    "id": "review001",
+    "listingId": "bmw320i1",
+    "sellerId": "user_ava",
+    "buyerId": "user_mia",
+    "buyerName": "Mia Carter",
+    "rating": 5,
+    "comment": "Exactly as described and really easy to arrange collection with.",
+    "createdAt": "2026-04-02T10:00:00.000Z"
+  },
+  {
+    "id": "review002",
+    "listingId": "ebike11",
+    "sellerId": "user_nia",
+    "buyerId": "user_jordan",
+    "buyerName": "Jordan Ellis",
+    "rating": 4,
+    "comment": "Smooth pickup and the bike was in great shape.",
+    "createdAt": "2026-04-02T13:00:00.000Z"
+  }
+]
