@@ -1,5 +1,9 @@
 import { Listing, Message, Review } from './types';
 
+export function isFreeStuffCategory(category: string) {
+  return category.trim().toLowerCase() === 'free stuff';
+}
+
 export function getPriceValue(price: string) {
   const match = price.replace(/,/g, '').match(/\d+(\.\d+)?/);
   return match ? Number(match[0]) : Number.POSITIVE_INFINITY;
@@ -43,7 +47,7 @@ export function matchesDistance(listing: Listing, distance: string) {
 }
 
 export function isFreeStuffListing(listing: Listing) {
-  if (listing.category === 'Free Stuff') {
+  if (isFreeStuffCategory(listing.category)) {
     return true;
   }
 

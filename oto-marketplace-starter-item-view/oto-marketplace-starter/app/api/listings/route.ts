@@ -4,13 +4,19 @@ import path from 'path';
 import { getCurrentUser } from '@/lib/auth';
 import { addListing, getListings } from '@/lib/file-db';
 import { makeId } from '@/lib/format';
+import { isFreeStuffCategory } from '@/lib/marketplace';
 import { Listing, PriceUnit } from '@/lib/types';
+import { corsPreflight, withCors } from '@/lib/cors';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const listings = await getListings();
-  return NextResponse.json({ ok: true, data: listings });
+  return withCors(NextResponse.json({ ok: true, data: listings }));
+}
+
+export function OPTIONS() {
+  return corsPreflight();
 }
 
 function formatPrice(amount: number, type: Listing['type'], unit: PriceUnit) {
@@ -27,11 +33,19 @@ function formatPrice(amount: number, type: Listing['type'], unit: PriceUnit) {
   return `${currency}/${unit}`;
 }
 
+function getListingPrice(amount: number, type: Listing['type'], unit: PriceUnit, category: string) {
+  if (type === 'sale' && isFreeStuffCategory(category) && amount === 0) {
+    return 'Free';
+  }
+
+  return formatPrice(amount, type, unit);
+}
+
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return NextResponse.json({ ok: false, error: 'Sign in to create a listing.' }, { status: 401 });
+    return withCors(NextResponse.json({ ok: false, error: 'Sign in to create a listing.' }, { status: 401 }));
   }
 
   const formData = await request.formData();
@@ -52,33 +66,44 @@ export async function POST(request: Request) {
   const acceptsOffers = type === 'sale' && rawAcceptsOffers === 'true';
   const minimumOfferAmount =
     acceptsOffers && rawMinimumOfferAmount ? Number(rawMinimumOfferAmount) : null;
+  const isFreeStuff = isFreeStuffCategory(category);
 
   if (!title || !type || !location || !category || !description || !rawPriceAmount) {
-    return NextResponse.json({ ok: false, error: 'All listing fields are required.' }, { status: 400 });
+    return withCors(NextResponse.json({ ok: false, error: 'All listing fields are required.' }, { status: 400 }));
   }
 
-  if (!Number.isFinite(priceAmount) || priceAmount <= 0) {
-    return NextResponse.json({ ok: false, error: 'Enter a valid price amount.' }, { status: 400 });
+  if (!Number.isFinite(priceAmount) || priceAmount < 0) {
+    return withCors(NextResponse.json({ ok: false, error: 'Enter a valid price amount.' }, { status: 400 }));
+  }
+
+  if (type === 'sale' && isFreeStuff) {
+    if (priceAmount !== 0) {
+      return withCors(NextResponse.json({ ok: false, error: 'Free Stuff listings must use a price of 0.' }, { status: 400 }));
+    }
+  } else if (type === 'sale' && priceAmount < 0.5) {
+    return withCors(NextResponse.json({ ok: false, error: 'Sale listings must be at least £0.50 unless they are in Free Stuff.' }, { status: 400 }));
+  } else if (type !== 'sale' && priceAmount <= 0) {
+    return withCors(NextResponse.json({ ok: false, error: 'Rental listings must be priced above 0.' }, { status: 400 }));
   }
 
   if (!Number.isInteger(quantityAvailable) || quantityAvailable < 1) {
-    return NextResponse.json({ ok: false, error: 'Quantity must be at least 1.' }, { status: 400 });
+    return withCors(NextResponse.json({ ok: false, error: 'Quantity must be at least 1.' }, { status: 400 }));
   }
 
   if (type !== 'sale' && !priceUnit) {
-    return NextResponse.json({ ok: false, error: 'Choose a pricing unit for rental listings.' }, { status: 400 });
+    return withCors(NextResponse.json({ ok: false, error: 'Choose a pricing unit for rental listings.' }, { status: 400 }));
   }
 
   if (acceptsOffers && (!Number.isFinite(minimumOfferAmount) || (minimumOfferAmount ?? 0) <= 0)) {
-    return NextResponse.json({ ok: false, error: 'Enter a valid minimum offer.' }, { status: 400 });
+    return withCors(NextResponse.json({ ok: false, error: 'Enter a valid minimum offer.' }, { status: 400 }));
   }
 
   if (!(file instanceof File) || file.size === 0) {
-    return NextResponse.json({ ok: false, error: 'Please upload at least one image.' }, { status: 400 });
+    return withCors(NextResponse.json({ ok: false, error: 'Please upload at least one image.' }, { status: 400 }));
   }
 
   if (!file.type.startsWith('image/')) {
-    return NextResponse.json({ ok: false, error: 'Uploaded file must be an image.' }, { status: 400 });
+    return withCors(NextResponse.json({ ok: false, error: 'Uploaded file must be an image.' }, { status: 400 }));
   }
 
   const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
@@ -93,7 +118,7 @@ export async function POST(request: Request) {
   const listing: Listing = {
     id: makeId(),
     title,
-    price: formatPrice(priceAmount, type, priceUnit),
+    price: getListingPrice(priceAmount, type, priceUnit, category),
     priceAmount,
     priceUnit,
     rating: 5,
@@ -117,5 +142,5 @@ export async function POST(request: Request) {
   };
 
   await addListing(listing);
-  return NextResponse.json({ ok: true, data: listing }, { status: 201 });
+  return withCors(NextResponse.json({ ok: true, data: listing }, { status: 201 }));
 }

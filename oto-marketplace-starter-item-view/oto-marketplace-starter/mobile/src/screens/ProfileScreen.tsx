@@ -10,24 +10,26 @@ const stats = [
 
 export function ProfileScreen() {
   return (
-    <ScreenShell title="Profile" subtitle="A mobile profile should surface trust, seller activity, and settings faster than the current web nav allows.">
-      <View style={styles.profileCard}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>GS</Text>
-        </View>
-        <View style={styles.profileBody}>
-          <Text style={styles.name}>Greena Seller</Text>
-          <Text style={styles.meta}>South London · Verified email · 3 years on platform</Text>
-        </View>
-      </View>
-
-      <View style={styles.statsRow}>
-        {stats.map((stat) => (
-          <View key={stat.label} style={styles.statCard}>
-            <Text style={styles.statValue}>{stat.value}</Text>
-            <Text style={styles.statLabel}>{stat.label}</Text>
+    <ScreenShell hideHeader>
+      <View style={styles.profileBubble}>
+        <View style={styles.profileTop}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>GS</Text>
           </View>
-        ))}
+          <View style={styles.profileBody}>
+            <Text style={styles.name}>Greena Seller</Text>
+            <Text style={styles.meta}>South London · Verified email · 3 years on platform</Text>
+          </View>
+        </View>
+
+        <View style={styles.statsRow}>
+          {stats.map((stat) => (
+            <View key={stat.label} style={styles.statItem}>
+              <Text style={styles.statValue}>{stat.value}</Text>
+              <Text style={styles.statLabel}>{stat.label}</Text>
+            </View>
+          ))}
+        </View>
       </View>
 
       <View style={styles.panel}>
@@ -56,64 +58,65 @@ export function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  profileCard: {
+  profileBubble: {
+    marginTop: spacing.xs,
+    backgroundColor: palette.white,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: palette.line,
+    padding: spacing.md,
+    gap: spacing.md,
+  },
+  profileTop: {
     flexDirection: 'row',
     gap: spacing.md,
-    backgroundColor: '#F4FBFA',
-    borderRadius: 24,
-    padding: spacing.lg,
-    borderWidth: 1,
-    borderColor: '#D9F1EE',
+    alignItems: 'center',
   },
   avatar: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     backgroundColor: '#D9F1EE',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarText: {
     color: palette.forest,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '800',
   },
   profileBody: {
     flex: 1,
-    gap: 6,
+    gap: 4,
   },
   name: {
     color: palette.text,
-    fontSize: 22,
-    fontWeight: '800',
+    fontSize: 20,
+    fontWeight: '700',
   },
   meta: {
     color: palette.muted,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 13,
+    lineHeight: 19,
   },
   statsRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     gap: spacing.sm,
   },
-  statCard: {
+  statItem: {
     flex: 1,
-    backgroundColor: palette.white,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: palette.line,
-    padding: spacing.md,
-    gap: 6,
+    gap: 3,
   },
   statValue: {
     color: palette.text,
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 17,
+    fontWeight: '700',
   },
   statLabel: {
     color: palette.muted,
-    fontSize: 12,
-    lineHeight: 18,
+    fontSize: 11,
+    lineHeight: 16,
   },
   panel: {
     backgroundColor: palette.white,
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
   panelTitle: {
     color: palette.text,
     fontSize: 18,
-    fontWeight: '800',
+    fontWeight: '700',
   },
   panelBody: {
     color: palette.muted,
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
   actionText: {
     color: palette.text,
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   actionArrow: {
     color: palette.muted,

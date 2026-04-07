@@ -1,5 +1,31 @@
 [
   {
+    "id": "8nccood2",
+    "senderId": "user_mia",
+    "senderName": "Mia Carter",
+    "senderEmail": "mia@oto.market",
+    "recipientId": "user_ava",
+    "recipientName": "Ava Bennett",
+    "recipientEmail": "ava@oto.market",
+    "listingId": "freelamp1",
+    "listingTitle": "Free floor lamp",
+    "message": "Hi, I'd love to collect this if it's still available. I can pick it up at a time that suits you.",
+    "createdAt": "2026-04-07T21:39:00.267Z"
+  },
+  {
+    "id": "1sv7xgqs",
+    "senderId": "user_mia",
+    "senderName": "Mia Carter",
+    "senderEmail": "mia@oto.market",
+    "recipientId": "user_ava",
+    "recipientName": "Ava Bennett",
+    "recipientEmail": "ava@oto.market",
+    "listingId": "freelamp1",
+    "listingTitle": "Free floor lamp",
+    "message": "Hi, I'd love to collect this if it's still available. I can pick it up at a time that suits you.",
+    "createdAt": "2026-04-07T21:36:28.530Z"
+  },
+  {
     "id": "lz3s1xig",
     "senderId": "user_mia",
     "senderName": "Mia Carter",

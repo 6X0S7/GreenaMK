@@ -1,5 +1,179 @@
 [
   {
+    "id": "freelamp1",
+    "title": "Free floor lamp",
+    "price": "Free",
+    "priceAmount": 0,
+    "priceUnit": null,
+    "rating": 4.6,
+    "ratingCount": 12,
+    "condition": "Available",
+    "fulfillment": [
+      "Collection"
+    ],
+    "acceptsOffers": false,
+    "minimumOfferAmount": null,
+    "quantityAvailable": 1,
+    "soldCount": 0,
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "type": "sale",
+    "location": "Plymouth",
+    "category": "Free Stuff",
+    "sellerId": "user_ava",
+    "sellerName": "Ava Bennett",
+    "distanceMiles": 2,
+    "image": "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1200&auto=format&fit=crop",
+    "description": "Free standing lamp. Works fine, just clearing space before a move.",
+    "createdAt": "2026-04-07T09:30:00.000Z"
+  },
+  {
+    "id": "freeboxes1",
+    "title": "Moving boxes bundle",
+    "price": "Free",
+    "priceAmount": 0,
+    "priceUnit": null,
+    "rating": 4.3,
+    "ratingCount": 8,
+    "condition": "Pending",
+    "fulfillment": [
+      "Collection"
+    ],
+    "acceptsOffers": false,
+    "minimumOfferAmount": null,
+    "quantityAvailable": 1,
+    "soldCount": 0,
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "type": "sale",
+    "location": "Plymouth",
+    "category": "Free Stuff",
+    "sellerId": "user_nia",
+    "sellerName": "Nia Shah",
+    "distanceMiles": 3,
+    "image": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
+    "description": "A stack of sturdy cardboard boxes, good for storage or moving house.",
+    "createdAt": "2026-04-07T09:10:00.000Z"
+  },
+  {
+    "id": "freechair1",
+    "title": "Free desk chair",
+    "price": "Free",
+    "priceAmount": 0,
+    "priceUnit": null,
+    "rating": 4.7,
+    "ratingCount": 16,
+    "condition": "Available",
+    "fulfillment": [
+      "Collection"
+    ],
+    "acceptsOffers": false,
+    "minimumOfferAmount": null,
+    "quantityAvailable": 1,
+    "soldCount": 0,
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1505843490701-5be5d7707c21?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "type": "sale",
+    "location": "Plymouth",
+    "category": "Free Stuff",
+    "sellerId": "user_mia",
+    "sellerName": "Mia Carter",
+    "distanceMiles": 1,
+    "image": "https://images.unsplash.com/photo-1505843490701-5be5d7707c21?q=80&w=1200&auto=format&fit=crop",
+    "description": "Fabric desk chair with a few marks, still comfortable and sturdy.",
+    "createdAt": "2026-04-07T10:15:00.000Z"
+  },
+  {
+    "id": "freeplant1",
+    "title": "Spider plant cuttings",
+    "price": "Free",
+    "priceAmount": 0,
+    "priceUnit": null,
+    "rating": 4.4,
+    "ratingCount": 5,
+    "condition": "Available",
+    "fulfillment": [
+      "Collection"
+    ],
+    "acceptsOffers": false,
+    "minimumOfferAmount": null,
+    "quantityAvailable": 3,
+    "soldCount": 0,
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "type": "sale",
+    "location": "Plymouth",
+    "category": "Free Stuff",
+    "sellerId": "user_ava",
+    "sellerName": "Ava Bennett",
+    "distanceMiles": 2,
+    "image": "https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=1200&auto=format&fit=crop",
+    "description": "Healthy rooted spider plant babies ready to pot at home.",
+    "createdAt": "2026-04-07T10:05:00.000Z"
+  },
+  {
+    "id": "freebooks1",
+    "title": "Box of mixed novels",
+    "price": "Free",
+    "priceAmount": 0,
+    "priceUnit": null,
+    "rating": 4.1,
+    "ratingCount": 9,
+    "condition": "Pending",
+    "fulfillment": [
+      "Collection"
+    ],
+    "acceptsOffers": false,
+    "minimumOfferAmount": null,
+    "quantityAvailable": 1,
+    "soldCount": 0,
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "type": "sale",
+    "location": "Plymouth",
+    "category": "Free Stuff",
+    "sellerId": "user_nia",
+    "sellerName": "Nia Shah",
+    "distanceMiles": 3,
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop",
+    "description": "A free box of paperback novels, mixed genres, collection only.",
+    "createdAt": "2026-04-07T09:55:00.000Z"
+  },
+  {
+    "id": "freemugs1",
+    "title": "Set of kitchen mugs",
+    "price": "Free",
+    "priceAmount": 0,
+    "priceUnit": null,
+    "rating": 4.8,
+    "ratingCount": 11,
+    "condition": "Available",
+    "fulfillment": [
+      "Collection"
+    ],
+    "acceptsOffers": false,
+    "minimumOfferAmount": null,
+    "quantityAvailable": 1,
+    "soldCount": 0,
+    "galleryImages": [
+      "https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "type": "sale",
+    "location": "Plymouth",
+    "category": "Free Stuff",
+    "sellerId": "user_jordan",
+    "sellerName": "Jordan Ellis",
+    "distanceMiles": 2,
+    "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?q=80&w=1200&auto=format&fit=crop",
+    "description": "Six assorted mugs, all clean and in good shape.",
+    "createdAt": "2026-04-07T09:45:00.000Z"
+  },
+  {
     "id": "smb4usz7",
     "title": "Example 1234",
     "price": "£100",

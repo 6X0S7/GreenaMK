@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { palette, spacing } from '../theme';
 
 type TopBarProps = {
@@ -35,7 +35,7 @@ export function TopBar({ title, subtitle, onBack, rightLabel }: TopBarProps) {
 const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
+    paddingTop: Platform.OS === 'ios' ? spacing.xxl + 6 : spacing.md,
     paddingBottom: spacing.sm,
     backgroundColor: palette.white,
   },

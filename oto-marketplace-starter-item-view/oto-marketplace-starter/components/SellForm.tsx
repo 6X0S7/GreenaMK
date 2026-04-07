@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { marketplaceCategories } from '@/lib/constants';
+import { isFreeStuffCategory } from '@/lib/marketplace';
 import type { ListingType, PriceUnit } from '@/lib/types';
 
 const rentalUnits: Array<{ value: Exclude<PriceUnit, null>; label: string }> = [
@@ -46,6 +47,7 @@ export default function SellForm() {
 
   const needsUnit = form.type !== 'sale';
   const showOfferSettings = form.type === 'sale';
+  const isFreeStuff = form.type === 'sale' && isFreeStuffCategory(form.category);
 
   function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
     const nextFile = event.target.files?.[0] || null;
@@ -58,6 +60,15 @@ export default function SellForm() {
     setError('');
 
     try {
+      const numericPrice = Number(form.priceAmount);
+      if (form.type === 'sale' && isFreeStuff && numericPrice !== 0) {
+        throw new Error('Free Stuff listings must use a price of 0.');
+      }
+
+      if (form.type === 'sale' && !isFreeStuff && (!Number.isFinite(numericPrice) || numericPrice < 0.5)) {
+        throw new Error('Sale listings must be at least £0.50 unless they are in Free Stuff.');
+      }
+
       const payload = new FormData();
       payload.append('title', form.title);
       payload.append('priceAmount', form.priceAmount);
@@ -140,10 +151,11 @@ export default function SellForm() {
             <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">GBP</span>
             <input
               className="w-full rounded-2xl border border-slate-200 py-3 pl-14 pr-4"
-              placeholder={needsUnit ? '18' : '1700'}
+              placeholder={isFreeStuff ? '0' : needsUnit ? '18' : '1700'}
               inputMode="decimal"
               value={form.priceAmount}
               onChange={(event) => setForm({ ...form, priceAmount: event.target.value })}
+              min={isFreeStuff ? 0 : 0.5}
               required
             />
           </div>
@@ -189,6 +201,12 @@ export default function SellForm() {
           required
         />
       </div>
+
+      {showOfferSettings ? (
+        <p className="text-sm text-slate-500">
+          {isFreeStuff ? 'Free Stuff listings must be priced at 0 and will display as Free.' : 'Sale listings must be at least £0.50.'}
+        </p>
+      ) : null}
 
       <div className={`grid gap-4 ${showOfferSettings ? 'md:grid-cols-[160px_minmax(0,1fr)]' : 'md:grid-cols-1'}`}>
         <input

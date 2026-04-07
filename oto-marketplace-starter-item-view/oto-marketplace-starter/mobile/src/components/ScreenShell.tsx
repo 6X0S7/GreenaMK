@@ -1,22 +1,31 @@
 import { ReactNode } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { palette, spacing } from '../theme';
 
 type ScreenShellProps = {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
+  hideHeader?: boolean;
+  hideEyebrow?: boolean;
+  headerOffset?: number;
+  contentTopPadding?: number;
   children: ReactNode;
 };
 
-export function ScreenShell({ title, subtitle, children }: ScreenShellProps) {
+export function ScreenShell({ title, subtitle, hideHeader, hideEyebrow, headerOffset = 0, contentTopPadding, children }: ScreenShellProps) {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Text style={styles.eyebrow}>Greena prototype</Text>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
-        </View>
+      <ScrollView
+        contentContainerStyle={[styles.content, contentTopPadding !== undefined ? { paddingTop: contentTopPadding } : null]}
+        showsVerticalScrollIndicator={false}
+      >
+        {!hideHeader ? (
+          <View style={[styles.header, { marginTop: headerOffset }]}>
+            {!hideEyebrow ? <Text style={styles.eyebrow}>Greena prototype</Text> : null}
+            {title ? <Text style={styles.title}>{title}</Text> : null}
+            {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
+          </View>
+        ) : null}
         {children}
       </ScrollView>
     </SafeAreaView>
@@ -30,6 +39,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: spacing.lg,
+    paddingTop: Platform.OS === 'ios' ? spacing.xxl : spacing.lg,
     paddingBottom: 110,
     gap: spacing.lg,
   },

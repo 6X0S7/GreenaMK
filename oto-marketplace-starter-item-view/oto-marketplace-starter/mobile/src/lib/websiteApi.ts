@@ -5,6 +5,8 @@ type WebsiteListing = {
   id: string;
   title: string;
   price: string;
+  type?: 'sale' | 'rent' | 'rent-to-own';
+  rating?: number;
   condition?: string;
   location: string;
   category: string;
@@ -26,6 +28,19 @@ type WebsiteMessage = {
   listingTitle: string;
   message: string;
   createdAt: string;
+};
+
+type CreateMessageInput = {
+  senderId: string;
+  recipientId: string;
+  listingId: string;
+  listingTitle: string;
+  message: string;
+};
+
+type UpdateListingConditionInput = {
+  actorId: string;
+  condition: string;
 };
 
 type ApiResponse<T> = {
@@ -67,11 +82,14 @@ export function mapListing(listing: WebsiteListing): Listing {
   return {
     id: listing.id,
     title: listing.title,
-    price: listing.price.replace('£', 'GBP '),
+    price: listing.price.replace(/\bGBP\s?/g, '£').replace('Â£', '£'),
+    type: listing.type,
     location: listing.location,
     category: listing.category,
     distance: `${listing.distanceMiles} mi`,
+    distanceMiles: listing.distanceMiles,
     seller: listing.sellerName,
+    rating: listing.rating ?? 4.2,
     badge: listing.price.includes('/') ? 'Rent' : 'Live listing',
     condition: listing.condition || 'Available',
     description: listing.description,
@@ -83,6 +101,11 @@ export function mapListing(listing: WebsiteListing): Listing {
 function buildThreadId(message: WebsiteMessage) {
   const pair = [message.senderId, message.recipientId].sort().join(':');
   return `${message.listingId}:${pair}`;
+}
+
+export function buildThreadIdFromParts(listingId: string, firstUserId: string, secondUserId: string) {
+  const pair = [firstUserId, secondUserId].sort().join(':');
+  return `${listingId}:${pair}`;
 }
 
 export function mapThreadPreviews(messages: WebsiteMessage[]): MessagePreview[] {
@@ -102,6 +125,7 @@ export function mapThreadPreviews(messages: WebsiteMessage[]): MessagePreview[] 
 
       return {
         id: threadId,
+        listingId: latest.listingId,
         name: latest.senderName,
         listingTitle: latest.listingTitle,
         preview: latest.message,
@@ -130,7 +154,23 @@ export function mapThreadMessages(messages: WebsiteMessage[], threadId: string):
 }
 
 async function fetchJson<T>(path: string) {
-  const response = await fetch(`${apiBaseUrl}${path}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
+  let response: Response;
+
+  try {
+    response = await fetch(`${apiBaseUrl}${path}`, { signal: controller.signal });
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error(`Timed out reaching ${apiBaseUrl}`);
+    }
+
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+
   const payload = (await response.json()) as ApiResponse<T>;
 
   if (!response.ok || !payload.ok || !payload.data) {
@@ -147,4 +187,40 @@ export async function fetchListings() {
 
 export async function fetchMessages() {
   return fetchJson<WebsiteMessage[]>('/api/messages');
+}
+
+export async function createMessage(input: CreateMessageInput) {
+  const response = await fetch(`${apiBaseUrl}/api/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  });
+
+  const payload = (await response.json()) as ApiResponse<WebsiteMessage>;
+
+  if (!response.ok || !payload.ok || !payload.data) {
+    throw new Error(payload.error || 'Failed to create message.');
+  }
+
+  return payload.data;
+}
+
+export async function updateListingCondition(listingId: string, input: UpdateListingConditionInput) {
+  const response = await fetch(`${apiBaseUrl}/api/listings/${listingId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  });
+
+  const payload = (await response.json()) as ApiResponse<WebsiteListing>;
+
+  if (!response.ok || !payload.ok || !payload.data) {
+    throw new Error(payload.error || 'Failed to update listing.');
+  }
+
+  return mapListing(payload.data);
 }
